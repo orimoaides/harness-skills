@@ -38,7 +38,19 @@ cp -r harness-skills/skills/* ~/.claude/skills/
 
 ## 併用を推奨する外部スキル
 
-（調査中 — 各分野の実践者が推すスキルを選定して追記する）
+実践者6人（クラシル坪田・PKSHA清水・Rimoにしゃみー・r.kagaya・Findy mukai・kgsi）の2026年発信から、実用系のみ選定（ネタ系は除外）。詳細と出典は [docs/field-notes.md](docs/field-notes.md)。
+
+| スキル | 作者 | 何に効くか | 導入 |
+|---|---|---|---|
+| [melta-ui: design-review / ban-pattern](https://github.com/tsubotax/melta-ui) | 坪田朋（MIT） | DS違反の重大度別検出＋HTMLレポート／「AIっぽい」を1コマンドで禁止ルール化。クラシル一発動作率20→100%のOSS版 | `git clone` して skills/ を導入 |
+| [Parascope-skills: /zen](https://github.com/lumilinks-hq/Parascope-skills) | kgsi | **日本語デザイン品質**（和文の行間・行長・組版）。日本語バナー評価と相性最良 | `npx skills add lumilinks-hq/Parascope-skills` |
+| [skill-evaluator](https://ai-data-base.com/skill/skill-evaluator/) | AIDB | スキル自体を13項目39点で採点。本パックの4スキルの健診に | zip配置 |
+| [Impeccable](https://impeccable.style) | — | 29アンチパターン検出（生成側の品質） | 公式手順 |
+| [ui-skills](https://ui-skills.com) / [Taste Skill](https://github.com/Leonxlnx/taste-skill) | ibelick / Leonxlnx | 生成側の凡庸回避 | 公式手順 |
+
+**入れすぎ注意**: 2026年の効果検証研究では8割のスキルが性能を動かさず、過剰導入は逆効果。まず melta-ui と /zen だけ入れて評価ループを回し、必要が実証されたら足すこと。
+
+非公開だが設計参考: PKSHAのスキル評価用スキル（8観点）・ヒューリスティック評価スキル、Rimoの制約セット、r.kagayaのharness-entropy/feedback（いずれも field-notes 参照）。
 
 ## 参考元
 
