@@ -10,10 +10,10 @@
     { "id": "req-mandatory", "result": "true|false|unverified", "note": "" }
   ],
   "class_b": [
-    { "id": "hierarchy-priority", "result": "pass|minor|fail", "reason": "", "method": "実測|目視|読解", "confidence": "high|mid|low", "intent_declared": false }
+    { "id": "hierarchy-priority", "score": 7, "band": "caution", "reason": "", "method": "実測|目視|読解", "confidence": "high|mid|low", "intent_declared": false }
   ],
-  "class_c_observations": [
-    { "note": "見出しの字間が広く見える", "method": "目視", "confidence": "low" }
+  "class_c": [
+    { "id": "kerning-fine", "shadow_score": 6, "band": "caution", "observations": ["見出しの字間が広く見える"], "method": "目視", "confidence": "low", "note": "影スコア=集計外。人間の判定材料" }
   ],
   "unverified": [
     { "id": "", "why": "規定文書未提供 / 画像解像度不足 / ブリーフ欠落" }
