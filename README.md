@@ -13,11 +13,30 @@
 | [design-review-panel](skills/design-review-panel/SKILL.md) | 専門家5役の討論（class B用） | 定性観点を深く見たい時・乖離が大きい時 |
 | [eval-calibrate](skills/eval-calibrate/SKILL.md) | 人間FBとの突き合わせ・較正 | 人間のレビュー結果が出るたび |
 
+```mermaid
+flowchart TD
+  A["案件データ（画像＋ブリーフ）"] --> B["eval-orient — 診断・評価セット提案（承認は人間）"]
+  B --> C1["banner-eval: class A 機械照合 — falseは即差し戻し"]
+  C1 --> C2["class B — 10段階採点（帯 1-3 / 4-7 / 8-10 を先に決める）"]
+  C2 --> C3["class C — 影スコア（集計外・人間の判定材料）"]
+  C3 --> C4["採点 — score/10 × 配点 の機械集計"]
+  C4 -.->|確信度lowや乖離が多い稿| D["design-review-panel — 5役討論（独立→相互批判→裁定）"]
+  C4 --> E["出力 — JSON正本（calibration/）＋ペラいちHTML"]
+  D --> E
+  E --> F["人間レビュー — 合否と『良し』の最終判断"]
+  F --> G["eval-calibrate — 帯一致で突き合わせ・カウンタ更新"]
+  G -->|人間の承認後| H["更新 — B基準・お手本・プリセット／まれに昇格・降格"]
+  H --> B
 ```
-eval-orient → banner-eval →（必要なら design-review-panel）→ 人間レビュー → eval-calibrate
-     ↑                                                                        │
-     └────────────── 較正結果がスキル棚・配点・プリセットを更新 ←──────────────┘
-```
+
+## 使い方（トリガー例）
+
+| 場面 | 言い方の例 | 起動するスキル |
+|---|---|---|
+| 案件が来た・評価を始めたい | 「このバナー評価して」（画像＋ブリーフ添付） | eval-orient → banner-eval |
+| 定性観点を深く見たい・判定が割れそう | 「討論で見て」 | design-review-panel |
+| 人間のレビュー結果が出た | 「このFBと突き合わせて」「較正して」 | eval-calibrate |
+| 日本語の組版・文字まわりだけ見たい | 「日本語の組版チェックして」 | zen（外部） |
 
 ## 設計原則（このパックの前提）
 
