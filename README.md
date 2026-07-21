@@ -9,9 +9,11 @@
 | スキル | 役割 | いつ使う |
 |---|---|---|
 | [eval-orient](skills/eval-orient/SKILL.md) | 診断・評価セット選択 | 評価を始める前に必ず |
-| [banner-eval](skills/banner-eval/SKILL.md) | 評価の実行体（A照合→B定性→採点） | 画像＋ブリーフが揃ったら |
-| [design-review-panel](skills/design-review-panel/SKILL.md) | 専門家5役の討論（class B用） | 定性観点を深く見たい時・乖離が大きい時 |
+| [banner-eval](skills/banner-eval/SKILL.md) | 評価の実行体（A実測照合→B10段階→C影スコア→採点） | 画像＋ブリーフが揃ったら |
+| [design-review-panel](skills/design-review-panel/SKILL.md) | 専門家5役の討論（並列サブエージェントで独立評価） | 定性観点を深く見たい時・乖離が大きい時 |
 | [eval-calibrate](skills/eval-calibrate/SKILL.md) | 人間FBとの突き合わせ・較正 | 人間のレビュー結果が出るたび |
+
+各スキルの中の流れは図解つきの **[docs/skills-guide.md](docs/skills-guide.md)** を参照。
 
 ```mermaid
 flowchart TD
