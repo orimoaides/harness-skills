@@ -63,8 +63,8 @@ cp -r harness-skills/skills/* ~/.claude/skills/
 
 | スキル | 作者 | 何に効くか | 導入 |
 |---|---|---|---|
-| [melta-ui: design-review / ban-pattern](https://github.com/tsubotax/melta-ui) | 坪田朋（MIT） | DS違反の重大度別検出＋HTMLレポート／「AIっぽい」を1コマンドで禁止ルール化。クラシル一発動作率20→100%のOSS版 | `git clone` して skills/ を導入 |
-| [Parascope-skills: /zen](https://github.com/lumilinks-hq/Parascope-skills) | kgsi | **日本語デザイン品質**（和文の行間・行長・組版）。日本語バナー評価と相性最良 | `npx skills add lumilinks-hq/Parascope-skills` |
+| [melta-ui: design-review / ban-pattern](https://github.com/tsubotax/melta-ui) | 坪田朋（MIT） | DS違反の重大度別検出＋HTMLレポート／「AIっぽい」を1コマンドで禁止ルール化。クラシル一発動作率20→100%のOSS版 | **本リポジトリに同梱済み**（skills/、原ライセンス同封）。※design-reviewはmelta UI基準のDSレビュー。フル機能は本家repo併用 |
+| [Parascope-skills: /zen](https://github.com/lumilinks-hq/Parascope-skills) | kgsi（Apache 2.0） | **日本語デザイン品質**（和文の行間・行長・組版）。日本語バナー評価と相性最良 | **本リポジトリに同梱済み**（skills/zen、原ライセンス同封） |
 | [skill-evaluator](https://ai-data-base.com/skill/skill-evaluator/) | AIDB | スキル自体を13項目39点で採点。本パックの4スキルの健診に | zip配置 |
 | [Impeccable](https://impeccable.style) | — | 29アンチパターン検出（生成側の品質） | 公式手順 |
 | [ui-skills](https://ui-skills.com) / [Taste Skill](https://github.com/Leonxlnx/taste-skill) | ibelick / Leonxlnx | 生成側の凡庸回避 | 公式手順 |
