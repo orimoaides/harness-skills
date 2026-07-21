@@ -73,6 +73,19 @@ cp -r harness-skills/skills/* ~/.claude/skills/
 
 非公開だが設計参考: PKSHAのスキル評価用スキル（8観点）・ヒューリスティック評価スキル、Rimoの制約セット、r.kagayaのharness-entropy/feedback（いずれも field-notes 参照）。
 
+## 思想・方針ドキュメント（docs/）
+
+スキルの背後にある考え方も一式同梱。会社環境などへ持ち込むときはリポジトリごとcloneすれば全部ついてくる。
+
+| ドキュメント | 中身 |
+|---|---|
+| [philosophy.md](docs/philosophy.md) | 中心思想・4層定義・class A/B/C設計・メタスキルループ・較正ルールの原本 |
+| [design-rationale.md](docs/design-rationale.md) | 個々の設計判断の「なぜ」（帯が先の理由・影スコアの理由 等） |
+| [skills-guide.md](docs/skills-guide.md) | 各スキルの説明図解（mermaid）とクラス早見表 |
+| [field-notes.md](docs/field-notes.md) | 実践者6人から抽出した知見と出典 |
+| [intake-ledger.md](docs/intake-ledger.md) | 参考リンクの取り込み台帳（スキル化/知見の判定と出典つき） |
+| [skill-plan-2026-07.md](docs/skill-plan-2026-07.md) | スキル化計画の初期整理（経緯の記録） |
+
 ## 参考元
 
 - kgsi: [デザインハーネスとは何か](https://note.com/kgsi/n/n707d989e1a44) / [現在地とこれから](https://note.com/kgsi/n/n64123e4e2aa6)（収束と探索）
