@@ -10,10 +10,10 @@
     { "id": "req-mandatory", "result": "true|false|unverified", "note": "" }
   ],
   "class_b": [
-    { "id": "hierarchy-priority", "score": 7, "band": "caution", "reason": "", "method": "実測|目視|読解", "confidence": "high|mid|low", "intent_declared": false }
+    { "id": "hierarchy-priority", "score": 7, "band": "fail|rework|polish|pass", "reason": "", "method": "実測|目視|読解", "confidence": "high|mid|low", "intent_declared": false, "intent_approved_by": null }
   ],
   "class_c": [
-    { "id": "kerning-fine", "shadow_score": 6, "band": "caution", "observations": ["見出しの字間が広く見える"], "method": "目視", "confidence": "low", "note": "影スコア=集計外。人間の判定材料" }
+    { "id": "kerning-fine", "shadow_score": 6, "band": "polish", "observations": ["見出しの字間が広く見える"], "method": "目視", "confidence": "low", "note": "影スコア=集計外。人間の判定材料" }
   ],
   "unverified": [
     { "id": "", "why": "規定文書未提供 / 画像解像度不足 / ブリーフ欠落" }
@@ -23,12 +23,12 @@
     "verdict": "このまま出せる｜直せば出せる｜方向から再考",
     "one_liner": "総評1〜2文。判定の要約であって新しい評価を書かない",
     "strengths": [ "効いている点・次稿でも維持すべき点（keep）を2つまで" ],
-    "fix_first": [ "直す順の上位3つ（配点×帯の低さ順）" ],
+    "fix_first": [ "fix_order の上位3つをそのまま写す（独自ロジック禁止 — 直す順の定義は scoring.md の fix_order 一箇所のみ）" ],
     "handoff_to_human": [ "人間に見てほしい点: C観察・確信度low・panel乖離・未確認" ]
   },
   "delta": { "prev_draft": null, "craft_change": null, "resolved": [], "regressed": [] },
   "reliability": "較正前（ガードレール精度）｜較正n件済み",
-  "fix_order": [ "配点の高いfailから並べた改善指示" ],
+  "fix_order": [ "scoring.mdの定義で並べた改善指示（層優先則→配点×(10−score)）" ],
   "panel": { "used": false, "divergence": [] }
 }
 ```

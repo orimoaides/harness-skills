@@ -19,11 +19,11 @@ h1{font-size:20px}h2{font-size:16px;border-left:4px solid #5E7E7A;padding-left:8
 table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #D3D1C7;padding:6px 8px;text-align:left;vertical-align:top}
 th{background:#F1EFE8}img.banner{max-width:100%;border:1px solid #D3D1C7}
 .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
-.pass{background:#E1F5EE;color:#085041}.caution{background:#FAEEDA;color:#633806}.fail{background:#FCEBEB;color:#791F1F}
+.pass{background:#E1F5EE;color:#085041}.polish{background:#FAEEDA;color:#633806}.rework{background:#F5E3D0;color:#712B13}.fail{background:#FCEBEB;color:#791F1F}
 .gray{background:#F1EFE8;color:#444441}.legend{font-size:12px;color:#5F5E5A;background:#F7F5EF;padding:10px 12px;border-radius:8px}
 .warn{background:#FCEBEB;padding:10px 12px;border-radius:8px;font-weight:600}"""
 
-BAND_JP = {"pass": "合格 8-10", "caution": "要改善 4-7", "fail": "致命 1-3"}
+BAND_JP = {"pass": "合格 8-10", "polish": "表層修正 6-7", "rework": "構造修正 4-5", "fail": "致命 1-3", "caution": "要改善 4-7(旧)"}
 
 
 def badge(band):
@@ -75,6 +75,9 @@ def main():
     warn = ""
     if blocked:
         warn = f'<p class="warn">⛔ ブロック: {esc(score.get("instant_fail") or "class A照合にfalseあり — 点数以前に差し戻し")}</p>'
+    intents = sum(1 for x in d.get("class_b") or [] if x.get("intent_declared"))
+    if intents >= 3:
+        warn += f'<p class="warn">⚠ 意図宣言が{intents}件 — コンセプト不在の疑い。不問化には依頼主/レビュアーの承認が必要</p>'
     unverified = d.get("unverified", [])
     if unverified:
         warn += f'<p class="warn" style="background:#FAEEDA">⚠ 未確認 {len(unverified)}件あり — 「見ていない」は「問題なし」ではない</p>'
@@ -96,7 +99,7 @@ def main():
 <title>評価レポート {esc(meta.get('case_id'))} {esc(meta.get('draft'))}</title><style>{CSS}</style></head><body>
 <h1>バナー評価レポート — {esc(meta.get('case_id'))} / {esc(meta.get('draft'))}</h1>
 <p class="legend"><b>このレポートの読み方</b>: craft=出来栄えの点（100点満点）／compliance=規定を守れているか（点と別判定）／
-帯=致命1-3・要改善4-7・合格8-10／影スコア=AIの参考判定（合計には入っていない。最終判断は人間）／
+帯=致命1-3・構造修正4-5・表層修正6-7・合格8-10／影スコア=AIの参考判定（合計には入っていない。最終判断は人間）／
 未確認=見られなかった項目（問題なしという意味ではない）。信頼度: <b>{esc(d.get('reliability') or '較正前（ガードレール精度）')}</b></p>
 {warn}
 <h2>総評</h2>
@@ -113,9 +116,11 @@ def main():
 <h2>class B — 10段階採点</h2>
 <table><tr><th>観点</th><th>score</th><th>帯</th><th>根拠</th><th>測定</th><th>確信度</th><th>意図宣言</th></tr>
 {rows(d.get('class_b'), ['id','score','band','reason','method','confidence','intent_declared'])}</table>
-<h2>class C — 影スコア（集計外・人間が判定する箇所）</h2>
-<table><tr><th>観点</th><th>影score</th><th>帯</th><th>観察</th><th>測定</th><th>確信度</th></tr>
-{rows(d.get('class_c'), ['id','shadow_score','band','observations','method','confidence'])}</table>
+<h2>class C — 人間が判定する箇所</h2>
+<table><tr><th>観点</th><th>観察（先にここを自分の目で）</th><th>測定</th><th>確信度</th></tr>
+{rows(d.get('class_c'), ['id','observations','method','confidence'])}</table>
+<details><summary>AIの影スコアを開く（自分の判定を決めてから開くこと — 先に見ると引っ張られます）</summary>
+<table><tr><th>観点</th><th>影score</th><th>帯</th></tr>{rows(d.get('class_c'), ['id','shadow_score','band'])}</table></details>
 <h2>未確認テーブル</h2>
 <table><tr><th>観点</th><th>確認できなかった理由</th></tr>{rows(unverified, ['id','why'])}</table>
 <h2>改善指示（直す順）</h2>
