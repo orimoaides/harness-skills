@@ -1,6 +1,6 @@
 ---
 name: ban-pattern
-description: "Register AI-generated-looking UI patterns as prohibited rules in the design system. Use when user says \"AIっぽい\", \"AI臭い\", \"これ禁止\", \"このパターンやめたい\", \"ban this pattern\", \"add to prohibited\", or points out a generic/cookie-cutter UI element."
+description: "AI生成っぽいUIパターンをデザインシステムの禁止ルールとして登録する。対象はコードのUI（Tailwind/DSリポジトリ）のみ — バナー等の画像の凡庸指摘は eval-calibrate か brand-profile の❌✅追記で扱う。コードUIについて「AIっぽい」「AI臭い」「これ禁止」「このパターンやめたい」と言われたときに使う。※原文はmelta-ui(坪田朋・MIT)。日本語化と対象の明示は本パックでの追記"
 user-invokable: true
 args:
   - name: pattern
