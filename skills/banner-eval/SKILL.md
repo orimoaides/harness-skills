@@ -67,3 +67,4 @@ allowed-tools: Read, Glob, Write, Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/check
 - 複数案は案ごとに独立評価してから比較（最初から比較すると絶対判定が歪む）。
 - このスキルは**直さない**。改善指示まで。検品員が直すと自分の修正に甘くなる。
 - check_image.py はPillow必須。未導入エラーが出たら `pip3 install Pillow` を案内し、それまで該当項目はunverified。
+- ファイル不在・読み込み失敗（error: ファイルが見つからない）時はパスの確認を**1回だけ**促し、解決しなければ該当A観点をunverifiedにして評価を続行する（評価全体を止めない）。
