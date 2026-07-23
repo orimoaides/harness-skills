@@ -14,7 +14,8 @@ import mimetypes
 import os
 import sys
 
-CSS = """body{font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN',sans-serif;max-width:860px;margin:24px auto;padding:0 16px;color:#292826;line-height:1.7}
+CSS = """html{background:#FFFFFF}body{font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN',sans-serif;max-width:860px;margin:24px auto;padding:0 16px;background:#FFFFFF;color:#292826;line-height:1.7}
+table{background:#FFFFFF}
 h1{font-size:20px}h2{font-size:16px;border-left:4px solid #5E7E7A;padding-left:8px;margin-top:28px}
 table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #D3D1C7;padding:6px 8px;text-align:left;vertical-align:top}
 th{background:#F1EFE8}img.banner{max-width:100%;border:1px solid #D3D1C7}
@@ -96,7 +97,7 @@ def main():
         panel_html = f"<h2>専門家パネルの乖離と裁定</h2><ul>{pr}</ul>"
 
     doc = f"""<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
-<title>評価レポート {esc(meta.get('case_id'))} {esc(meta.get('draft'))}</title><style>{CSS}</style></head><body>
+<meta name="color-scheme" content="light only"><title>評価レポート {esc(meta.get('case_id'))} {esc(meta.get('draft'))}</title><style>{CSS}</style></head><body>
 <h1>バナー評価レポート — {esc(meta.get('case_id'))} / {esc(meta.get('draft'))}</h1>
 <p class="legend"><b>このレポートの読み方</b>: craft=出来栄えの点（100点満点）／compliance=規定を守れているか（点と別判定）／
 帯=致命1-3・構造修正4-5・表層修正6-7・合格8-10／影スコア=AIの参考判定（合計には入っていない。最終判断は人間）／
