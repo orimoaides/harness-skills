@@ -10,7 +10,7 @@
     { "id": "req-mandatory", "result": "true|false|unverified", "note": "" }
   ],
   "class_b": [
-    { "id": "hierarchy-priority", "score": 7, "band": "fail|rework|polish|pass", "reason": "", "method": "実測|目視|読解", "confidence": "high|mid|low", "intent_declared": false, "intent_approved_by": null }
+    { "id": "hierarchy-priority", "evaluator": "typo|graphic|appeal|brand|solo", "score": 7, "band": "fail|rework|polish|pass", "reason": "", "method": "実測|目視|読解", "confidence": "high|mid|low", "intent_declared": false, "intent_approved_by": null }
   ],
   "class_c": [
     { "id": "kerning-fine", "shadow_score": 6, "band": "polish", "observations": ["見出しの字間が広く見える"], "method": "目視", "confidence": "low", "note": "影スコア=集計外。人間の判定材料" }
