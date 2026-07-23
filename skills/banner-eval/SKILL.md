@@ -56,7 +56,8 @@ allowed-tools: Read, Glob, Write, Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/check
 
 ### 4. 出力
 1. **JSON**（正本）: `references/output-format.md` のスキーマで Write し、手順0で確認した `calibration/` に保存。**未確認テーブル必須**（「見てない」と「問題なし」を区別）。
-2. **HTML**（人間向け）: **手書きせず** `python3 ${CLAUDE_SKILL_DIR}/scripts/build_report.py <評価.json> --image <画像>` で生成する。理由: 画像のdata URI埋め込みをLLMが書くと捏造データになる。スクリプトが用語凡例・帯バッジ・未確認警告込みのペラいちHTMLを決定論で出す。
+2. **修正プロンプト**: fix_orderの編集で解決できる項目ごとに、`references/fix-prompt-guide.md` の型で画像編集AI（GPT等）にそのまま貼れるプロンプトを生成しJSONの `fix_prompts` に入れる（1プロンプト1修正・【変更しないもの】必須・日本語文字の再描画禁止を明記）。検証提案・人間判断事項はプロンプト化しない。改善稿が返ってきたら同じ評価セットで再評価しdeltaで副作用を検査する。
+3. **HTML**（人間向け）: **手書きせず** `python3 ${CLAUDE_SKILL_DIR}/scripts/build_report.py <評価.json> --image <画像>` で生成する。理由: 画像のdata URI埋め込みをLLMが書くと捏造データになる。スクリプトが用語凡例・帯バッジ・未確認警告込みのペラいちHTMLを決定論で出す。
 
 ## Gotchas
 - 画像は必ず実寸で確認（縮小プレビューはにじみ・小さい文字の破綻を見逃す）。

@@ -29,6 +29,9 @@
   "delta": { "prev_draft": null, "craft_change": null, "resolved": [], "regressed": [] },
   "reliability": "較正前（ガードレール精度）｜較正n件済み",
   "fix_order": [ "scoring.mdの定義で並べた改善指示（層優先則→配点×(10−score)）" ],
+  "fix_prompts": [
+    { "for": "fix_orderの対応項目", "type": "edit|検証系のためプロンプト対象外", "prompt": "references/fix-prompt-guide.md の型で書いた、画像編集AIにそのまま貼れる修正プロンプト（1プロンプト1修正・保持指定必須・文字の再描画禁止を明記）" }
+  ],
   "panel": { "used": false, "divergence": [] }
 }
 ```

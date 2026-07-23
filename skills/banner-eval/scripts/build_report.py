@@ -90,6 +90,20 @@ def main():
                      f"改善: {esc('、'.join(delta.get('resolved') or []) or 'なし')} ／ "
                      f"後退: {esc('、'.join(delta.get('regressed') or []) or 'なし')}</p>")
 
+    fps = d.get("fix_prompts") or []
+    fix_prompts_html = ""
+    if fps:
+        blocks = []
+        for fp in fps:
+            if fp.get("type") == "edit" and fp.get("prompt"):
+                blocks.append(f"<p><b>{esc(fp.get('for'))}</b> — 画像編集AIにバナーと一緒にそのまま貼る:</p>"
+                              f"<pre style='white-space:pre-wrap;background:#F7F5EF;padding:12px;border-radius:8px;font-size:12px'>{esc(fp.get('prompt'))}</pre>")
+            else:
+                blocks.append(f"<p><b>{esc(fp.get('for'))}</b> — {esc(fp.get('type'))}</p>")
+        fix_prompts_html = ("<h2>AIに渡す修正プロンプト</h2>"
+                            "<p class='legend'>使い方: 画像編集AI（GPT等）にバナー画像と下のプロンプトを貼る → 改善稿が返ってきたらこのシステムで再評価（deltaが副作用を検査）。1プロンプト1修正。</p>"
+                            + "".join(blocks))
+
     panel = d.get("panel") or {}
     panel_html = ""
     if panel.get("used"):
@@ -126,6 +140,7 @@ def main():
 <table><tr><th>観点</th><th>確認できなかった理由</th></tr>{rows(unverified, ['id','why'])}</table>
 <h2>改善指示（直す順）</h2>
 <ol>{''.join(f'<li>{esc(x)}</li>' for x in d.get('fix_order') or []) or '<li>なし</li>'}</ol>
+{fix_prompts_html}
 {panel_html}
 </body></html>"""
 
