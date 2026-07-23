@@ -88,6 +88,7 @@ cp -r harness-skills/skills/* ~/.claude/skills/
 | [field-notes.md](docs/field-notes.md) | 実践者6人から抽出した知見と出典 |
 | [intake-ledger.md](docs/intake-ledger.md) | 参考リンクの取り込み台帳（スキル化/知見の判定と出典つき） |
 | [skill-plan-2026-07.md](docs/skill-plan-2026-07.md) | スキル化計画の初期整理（経緯の記録） |
+| [ops-loop.md](docs/ops-loop.md) | 評価ループ運用の掟（採用率KPI・STATE.md・ゲート点検・自動化の順序） |
 
 ## 参考元
 
