@@ -8,6 +8,7 @@
 
 | スキル | 役割 | いつ使う |
 |---|---|---|
+| [brief-dig](skills/brief-dig/SKILL.md) | 要件の矛盾と穴を潰す尋問（1問ずつ・推奨つき） | ブリーフが曖昧/矛盾するとき・正本づくり・曖昧FBの特定 |
 | [eval-orient](skills/eval-orient/SKILL.md) | 診断・評価セット選択 | 評価を始める前に必ず |
 | [banner-eval](skills/banner-eval/SKILL.md) | 評価の実行体（A実測照合→B10段階→C影スコア→採点） | 画像＋ブリーフが揃ったら |
 | [design-review-panel](skills/design-review-panel/SKILL.md) | 専門家5役の討論（並列サブエージェントで独立評価） | 定性観点を深く見たい時・乖離が大きい時 |
