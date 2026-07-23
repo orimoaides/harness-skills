@@ -11,25 +11,33 @@ allowed-tools: Read, Glob, Write, Edit
 評価スキルは最初は間違える（精度はガードレール水準から始まる）。間違いを較正データとして回収し、次の評価を1つ賢くする装置がこのスキル。
 
 ## 現在のカウンタ
-!`cat calibration/counters.json 2>/dev/null || echo "counters.json未作成（このディレクトリでの初回較正時に作成する）"`
+!`cat calibration/counters.json 2>/dev/null || echo "（cwdにcalibration/counters.jsonなし。運用リポジトリ内で起動しているか確認。勝手に新規作成しないこと）"`
+
+**保存先ルール**: calibration/ の正準は運用リポジトリ直下。上の行が「なし」の場合は cwd に新規作成せず、人間に正しい保存先を確認する（cwdごとにカウンタが分裂すると較正が壊れる）。
 
 ## 手順
 
 ### 1. 突き合わせ
-評価JSON（calibration/）と人間FBを観点単位で照合し、**帯（1–3/4–7/8–10）一致**で3分類（±1点のズレは追わない — 追うと較正が収束しない）:
-- **一致**: 同じ帯 → agree加算
-- **見落とし**: 人間は問題視、AIはpass帯 or 観点なし → miss加算
-- **誤指摘**: AIは低帯、人間は問題なし → false_alarm加算
-class Cの**影スコア**も同格に帯一致を記録。未確認テーブルにあった観点への指摘は「未確認由来」として別カウント（見なかった＝手順の問題と、見て外した＝基準の問題は直す場所が違う）。
+評価JSON（calibration/）と人間FBを観点単位で照合する。**判定は帯ペアの3×3対応表で漏れなく分類**（±1点のズレは追わないが、帯またぎは全パターン数える）:
+
+| AI＼人間 | fail(1–3) | caution(4–7) | pass(8–10) |
+|---|---|---|---|
+| **fail** | agree | false_alarm_weak | **false_alarm** |
+| **caution** | **miss_weak** | agree | false_alarm_weak |
+| **pass** | **miss** | miss_weak | agree |
+| **観点なし** | miss | miss_weak | — |
+
+弱(weak)を分けて数える理由: 「迷ったら4–7帯」の設計上、AI=caution×人間=fail が最頻の不一致になる。旧3分類ではこれがどこにも数えられず較正が一度も発火しなかった（監査AI-5で確認された穴）。
+class Cの**影スコア**も同じ表で記録。未確認テーブルにあった観点への指摘は「未確認由来」として別カウント（見なかった＝手順の問題と、見て外した＝基準の問題は直す場所が違う）。
 
 ### 2. カウンタ更新とルール発動
 `calibration/counters.json` を更新する。スキーマ:
 ```json
-{ "観点ID": { "agree": 0, "miss": 0, "false_alarm": 0, "unverified_hit": 0, "since": "YYYY-MM-DD", "class": "A|B|C" } }
+{ "観点ID": { "agree": 0, "miss": 0, "miss_weak": 0, "false_alarm": 0, "false_alarm_weak": 0, "unverified_hit": 0, "since": "YYYY-MM-DD", "class": "A|B|C" } }
 ```
-しきい値で提案:
-- **miss 2回** → 基準文の追加 or 新観点の起票
-- **false_alarm 2回** → 基準文を絞る
+しきい値で提案（**弱は0.5換算**: miss換算値 = miss + 0.5×miss_weak、false_alarm側も同様）:
+- **miss換算 2以上** → 基準文の追加 or 新観点の起票
+- **false_alarm換算 2以上** → 基準文を絞る
 - **どの観点にも該当しない人間指摘** → 新観点の起票
 - **C観点の帯一致が安定して高い** → B昇格（配点対象化）を提案
 - **B観点の誤指摘が減らない** → C降格を提案

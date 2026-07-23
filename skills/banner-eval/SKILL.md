@@ -3,7 +3,7 @@ name: banner-eval
 description: バナー・グラフィック画像をブリーフと照らして評価する実行体。A制約の機械照合→B観点の10段階採点→C影スコア→配点集計を行い、JSON評価データとHTML評価レポートを出力する。生成・修正はしない（評価専任）。
 when_to_use: 画像＋依頼内容を渡されて「評価して」「採点して」「チェックして」と言われたとき。eval-orient で評価セットが決まった直後。
 argument-hint: "[画像パス] [ブリーフ(任意)]"
-allowed-tools: Read, Glob, Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/check_image.py *), Bash(${CLAUDE_SKILL_DIR}/scripts/check_image.py *)
+allowed-tools: Read, Glob, Write, Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/check_image.py *), Bash(${CLAUDE_SKILL_DIR}/scripts/check_image.py *), Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/build_report.py *), Bash(${CLAUDE_SKILL_DIR}/scripts/build_report.py *)
 ---
 
 # banner-eval — バナー評価の実行体
@@ -13,8 +13,10 @@ allowed-tools: Read, Glob, Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/check_image.
 ## 手順
 
 ### 0. 入力の確認
-必要: ①画像 ②ブリーフ（媒体・サイズ・必須要素・NG・ターゲット・訴求優先順位）③ブランドプロファイル（`references/brand-profile.md`）④評価セット（eval-orientの出力。無ければ全観点）。
-ブリーフが無い項目は**推測で補完せず未確認扱い**（補完すると評価が想像に対するものになり較正に使えない）。
+必要: ①画像 ②ブリーフ（媒体・サイズ・必須要素・NG・ターゲット・訴求優先順位）③ブランドプロファイル（`references/brand-profile.md`）④評価セット（eval-orientの出力）。
+- **評価セットが無ければ評価を始めず、eval-orient の起動を提案して差し戻す。** 全観点での実行は人間が明示的に指定した場合のみ（その場合も eval_set に「全観点（人間指定）」と記録）。理由: 名前のない場当たり評価は較正で比較不能になる — presets.md の禁止事項を正規ルートで破らない。
+- ブリーフが無い項目は**推測で補完せず未確認扱い**（補完すると評価が想像に対するものになり較正に使えない）。
+- **保存先の確認**: 評価の正本は運用リポジトリ直下の `calibration/` に置く。カレントディレクトリに `calibration/` が見つからない場合、**勝手に新規作成せず**保存先を人間に確認する（cwdごとにデータが散ると較正が成立しないため）。
 
 ### 1. class A — 機械照合（ブロックゲート）
 `references/class-definitions.md` のA観点を照合する。判定は true/false のみ。
@@ -34,8 +36,8 @@ allowed-tools: Read, Glob, Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/check_image.
 **craft = Σ(観点score ÷ 10 × 配点)**（`references/scoring.md`）。影スコアは含めない。合計を感覚で丸めない。craftとcompliance（A照合結果）は別欄。
 
 ### 4. 出力
-1. **JSON**（正本）: `references/output-format.md` のスキーマで `calibration/` に保存。**未確認テーブル必須**（「見てない」と「問題なし」を区別）。
-2. **HTML**（人間向け）: JSONからペラいち自己完結HTMLを生成（画像埋め込み・観点と判定を同じ行・乖離明示）。
+1. **JSON**（正本）: `references/output-format.md` のスキーマで Write し、手順0で確認した `calibration/` に保存。**未確認テーブル必須**（「見てない」と「問題なし」を区別）。
+2. **HTML**（人間向け）: **手書きせず** `python3 ${CLAUDE_SKILL_DIR}/scripts/build_report.py <評価.json> --image <画像>` で生成する。理由: 画像のdata URI埋め込みをLLMが書くと捏造データになる。スクリプトが用語凡例・帯バッジ・未確認警告込みのペラいちHTMLを決定論で出す。
 
 ## Gotchas
 - 画像は必ず実寸で確認（縮小プレビューはにじみ・小さい文字の破綻を見逃す）。

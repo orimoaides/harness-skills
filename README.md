@@ -58,6 +58,8 @@ cp -r harness-skills/skills/* ~/.claude/skills/
 
 ブランド固有の規定（ロゴレギュレーション・入稿規定・トークン）は含まれていない。各自 `skills/banner-eval/references/brand-profile.md` の雛形に自分のブランドの値を書き込んで使う。
 
+**運用の前提（重要）**: 評価と較正は「運用リポジトリ」（このリポジトリのclone、または社内の評価用リポジトリ）の**中で**実行すること。評価JSON・counters.json の正準置き場はそのルート直下の `calibration/` で、リポジトリ外のディレクトリで評価すると較正データが散逸する。スキル側も calibration/ が見つからない場所では勝手に新規作成せず保存先を確認する設計になっている。
+
 ## 併用を推奨する外部スキル
 
 実践者6人（クラシル坪田・PKSHA清水・Rimoにしゃみー・r.kagaya・Findy mukai・kgsi）の2026年発信から、実用系のみ選定（ネタ系は除外）。詳細と出典は [docs/field-notes.md](docs/field-notes.md)。
